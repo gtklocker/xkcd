@@ -21,6 +21,9 @@ class Comic():
     """
     def __init__(self, num):
         """Grab the data about the comic and save it."""
+        if not isinstance(num, int) or num < 0:
+            raise ValueError(num)
+
         # hack to get the latest comic.
         if not num:
             num = '/' 
