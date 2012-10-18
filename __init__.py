@@ -7,6 +7,8 @@ class ComicFetchError(Exception):
     """Raised when something fails to download."""
     pass
 
+XKCD_API = 'https://xkcd.com/%s/info.0.json'
+XKCD_URL = 'https://xkcd.com/%s'
 class Comic():
     """Get information about comic #num. num=0 refers to the latest comic.
 
@@ -22,11 +24,9 @@ class Comic():
         # hack to get the latest comic.
         if not num:
             num = '/' 
-        self.api = 'https://xkcd.com/%s/info.0.json' % num
-        self.url = 'https://xkcd.com/%s' % num
 
         try:
-            self.data = json.loads(urllib2.urlopen(self.api).read())
+            self.data = json.loads(urllib2.urlopen(XKCD_API % num).read())
         except:
             raise ComicFetchError
 
@@ -38,7 +38,7 @@ class Comic():
     @property
     def url(self):
         """Return the comic's url."""
-        return self.url
+        return XKCD_URL % self.num
 
     @property
     def img(self):
