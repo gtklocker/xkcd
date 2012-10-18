@@ -3,23 +3,37 @@ import urllib2
 import json
 import datetime
 
+class ComicFetchError(Exception):
+    """Raised when something fails to download."""
+    pass
+
 class Comic():
-    """Get information about comic #num."""
+    """Get information about comic #num. num=0 refers to the latest comic.
+
+    To use:
+    >> comic = Comic(3)
+    >> comic.title
+    u'Island (sketch)'
+    >> latest = Comic(0)
+
+    """
     def __init__(self, num):
         """Grab the data about the comic and save it."""
-        self.num = num
-        self.api = 'https://xkcd.com/%s/info.0.json' % self.num
-        self.url = 'https://xkcd.com/%s' % self.num
+        # hack to get the latest comic.
+        if not num:
+            num = '/' 
+        self.api = 'https://xkcd.com/%s/info.0.json' % num
+        self.url = 'https://xkcd.com/%s' % num
 
         try:
             self.data = json.loads(urllib2.urlopen(self.api).read())
         except:
-            print('Something\'s wrong with the internet.')
+            raise ComicFetchError
 
     @property
     def num(self):
         """Return the comic's number."""
-        return self.num
+        return self.data['num']
 
     @property
     def url(self):
