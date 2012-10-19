@@ -1,14 +1,17 @@
 xkcd
 ====
 
-xkcd is a module that exposes the XKCD API to Python
+xkcd is a module that exposes the XKCD API to Python.
 
 How to use
 ----------
 
-Clone this repository from inside your working directory and go:
+Clone this repository inside your working directory and go!
 
-    import xkcd
+    >> import xkcd
+    >> comic = xkcd.Comic(10)
+    >> comic.url
+    https://xkcd.com/10
 
 License
 -------
